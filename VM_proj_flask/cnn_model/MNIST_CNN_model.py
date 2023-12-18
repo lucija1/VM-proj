@@ -1,5 +1,5 @@
 from keras.models import load_model
-from cnn_model.MNSIT_CNN_util import *
+from VM_proj_flask.cnn_model.MNIST_CNN_util import *
 from numpy import argmax
 from PIL import Image
 
@@ -17,7 +17,6 @@ class MNIST_CNN_model:
         elif image is not None:
             formatted_img = image
         else:
-            print("Error")
             return "error"
         predict_value = self.model.predict(formatted_img, verbose=0)
         digit = argmax(predict_value)

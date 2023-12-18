@@ -39,13 +39,13 @@
             {% endfor %}
         {% endif %}
 
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                <p class="{{ 'success' if 'success' in message else 'error' }}">{{ message }}</p>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
+        {% if 'messages' in session %}
+            {% for message in session['messages'] %}
+                <p style="color: {% if message['status'] == 'success' %}green{% else %}red{% endif %};">
+                    {{ message['text'] }}
+                </p>
+            {% endfor %}
+        {% endif %}
     
         <a href="{{ url_for('main.login') }}" class="btn btn-link" style="color: black;">Login</a><br>
     

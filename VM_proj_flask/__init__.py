@@ -1,7 +1,8 @@
 from flask import Flask
 
 from config import Config
-from VM_proj_flask.extensions import db, bycript, mail, login_manager
+from VM_proj_flask.extensions import bycript, db, login_manager, mail
+
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -16,13 +17,14 @@ def create_app(config_class=Config):
 
     # Register blueprints here
     from VM_proj_flask.main import bp as main_bp
+
     app.register_blueprint(main_bp)
 
     return app
+
 
 def create_db(app):
     with app.app_context():
         db.create_all()
         db.session.commit()
     print("Created Database!")
-

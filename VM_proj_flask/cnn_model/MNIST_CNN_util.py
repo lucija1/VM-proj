@@ -6,15 +6,21 @@ from PIL import Image
 
 # load and prepare the image
 def load_image_from_path(filename):
-    start_img = load_img(filename, color_mode="grayscale", target_size=(28, 28))
-    return start_img, format_image_for_model(start_img)
+    start_img = load_img(filename)
+
+    formatted_image = load_img(filename, color_mode="grayscale", target_size=(28, 28))
+    return start_img, format_image_for_model(formatted_image)
 
 
 def load_image_from_file(file):
-    start_img = load_img(
+    start_img = Image.open(BytesIO(file.read()))
+
+    file.seek(0)
+    
+    formatted_image = load_img(
         BytesIO(file.read()), color_mode="grayscale", target_size=(28, 28)
     )
-    return start_img, format_image_for_model(start_img)
+    return start_img, format_image_for_model(formatted_image)
 
 
 def format_image_for_model(start_img: Image):
@@ -25,5 +31,5 @@ def format_image_for_model(start_img: Image):
     # prepare pixel data
     formatted_img = formatted_img.astype("float32")
     formatted_img = formatted_img / 255.0
-    
+
     return formatted_img

@@ -2,14 +2,15 @@ import glob
 import os
 
 from flask import url_for
-from flask_mail import  Message
+from flask_mail import Message
 
-from VM_proj_flask.models.user import User
 from VM_proj_flask.extensions import mail
+from VM_proj_flask.models.user import User
+
 
 def cleanup_temp_folder():
     # Define the path to the temporary folder
-    temp_folder_path = os.path.join("static", "temp")
+    temp_folder_path = os.path.join("VM_proj_flask", "static", "temp")
 
     # Remove old files in the temporary folder
     for file_path in glob.glob(os.path.join(temp_folder_path, "*.png")):
