@@ -17,7 +17,7 @@ VM-proj is a Python Flask web application designed to classify MNIST images into
 
 ### Prerequisites
 
-- Python
+- Python 3.11.5
 - Docker (optional)
 
 ### Installation and Usage
