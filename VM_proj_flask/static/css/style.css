@@ -1,8 +1,15 @@
- 
-/* styles.css */
-
 .fixed-width-btn {
-    width: 15ch; /* Set the width equivalent to 15 characters */
-    padding: 10px; /* Add padding to the buttons */
+    width: 15ch;
+    /* Set the width equivalent to 15 characters */
+    padding: 10px;
+    /* Add padding to the buttons */
     margin: 5px;
+}
+
+p.success {
+    color: green;
+}
+
+p.error {
+    color: red;
 }

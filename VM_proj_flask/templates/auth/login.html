@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login</title>
     <!-- Bootstrap CSS -->
@@ -11,6 +12,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="static/css/style.css">
 </head>
+
 <body class="d-flex align-items-center justify-content-center vh-100">
     <div class="text-center">
         <h1 class="mb-3">Login</h1>
@@ -30,10 +32,27 @@
                 {{ form.submit(class="btn btn-outline-secondary") }}
             </div>
         </form>
-        
+
+        {% if form.errors %}
+            {% for field, errors in form.errors.items() %}
+                {% for e in errors %}
+                    <p style="color: red;">{{e}}</p>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                <p class="{{ 'success' if 'success' in message else 'error' }}">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+
         <a href="{{ url_for('forgot_password') }}" class="btn btn-link" style="color: black;">Forgot password?</a><br>
         <a href="{{ url_for('register') }}" class="btn btn-link" style="color: black;">Register</a><br>
-        
+
     </div>
 
     <!-- Bootstrap JS (Optional) -->
@@ -41,4 +60,5 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>

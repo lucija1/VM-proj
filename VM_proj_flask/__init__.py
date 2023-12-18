@@ -2,7 +2,7 @@ import os
 import uuid
 
 from dotenv import load_dotenv
-from flask import Flask, flash, redirect, render_template, request, url_for
+from flask import Flask, flash, redirect, render_template, request, url_for, session
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
 from flask_mail import Mail
@@ -90,14 +90,17 @@ def home():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
-
+    error = None
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user:
             if bycript.check_password_hash(user.password, form.password.data):
                 login_user(user)
                 return redirect("dashboard")
-    return render_template("auth/login.html", form=form)
+            
+        
+        error = "Email or password are incorrect."
+    return render_template("auth/login.html", form=form, error=error)
 
 
 @app.route("/logout", methods=["GET", "POST"])
@@ -110,14 +113,17 @@ def logout():
 @app.route("/forgot_password", methods=["GET", "POST"])
 def forgot_password():
     form = ForgotPasswordForm()
-
+    error = None
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user:
             send_mail(user)
             flash("Reset request sent. Check your mail", "success")
+            return redirect(url_for("forgot_password"))
+        else:
+            error = "Incorrect email given."
 
-    return render_template("auth/forgot_password.html", form=form)
+    return render_template("auth/forgot_password.html", form=form, error=error)
 
 
 @app.route("/forgot_password/<token>", methods=["GET", "POST"])

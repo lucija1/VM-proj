@@ -30,6 +30,22 @@
                 {{ form.submit(class="btn btn-outline-secondary") }}
             </div>
         </form>
+
+        {% if form.errors %}
+            {% for field, errors in form.errors.items() %}
+                {% for e in errors %}
+                    <p style="color: red;">{{e}}</p>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                <p class="{{ 'success' if 'success' in message else 'error' }}">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
     
         <a href="{{ url_for('login') }}" class="btn btn-link" style="color: black;">Login</a><br>
     
