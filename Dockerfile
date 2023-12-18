@@ -1,15 +1,24 @@
-FROM python:3.12
+FROM python:3.11.5
 
 # Set the working directory in the container
-WORKDIR /vm-application
+WORKDIR /app
 
-# Copy the requirements file into the container at /vm-application
+# Upgrade pip
+RUN pip install --no-cache-dir --upgrade pip
+
+# Copy the contents of the VM-proj folder into the container at /app
+COPY . /app
+
+# Copy the requirements file into the container at /app
 COPY requirements.txt .
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the application files into the container at /vm-application
-COPY application.py .
+# Make port 5000 available to the world outside this container
+EXPOSE 5000
 
-CMD ["python", "./application.py"]
+# Define environment variable
+ENV NAME vm-env
+
+CMD ["python", "run.py"]
