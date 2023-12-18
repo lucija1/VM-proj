@@ -4,7 +4,7 @@ from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField, SubmitField
 from wtforms.validators import Email, InputRequired, Length, ValidationError
 
-from VM_proj_flask import User
+from VM_proj_flask.models.user import User
 from VM_proj_flask.cnn_model.MNSIT_CNN_util import *
 
 def validate_password(password):

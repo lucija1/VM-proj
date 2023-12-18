@@ -4,7 +4,8 @@ import os
 from flask import url_for
 from flask_mail import  Message
 
-from VM_proj_flask import User, mail
+from VM_proj_flask.models.user import User
+from VM_proj_flask.extensions import mail
 
 def cleanup_temp_folder():
     # Define the path to the temporary folder
@@ -22,10 +23,8 @@ def send_mail(user: User):
         recipients=[user.email],
         sender="vmproj@outlook.com",
     )
-    msg.body = f"""To reset your password, follow the link below.
-{url_for('forgot_password_token', token=token, _external=True)}
-
-This link is valid for 10 minutes.
+    msg.body = f"""To reset your password, follow the link below. This link is valid for 10 minutes.
+{url_for('main.forgot_password_token', token=token, _external=True)}
 
 If you did not request a password reset, ignore this email.
 
